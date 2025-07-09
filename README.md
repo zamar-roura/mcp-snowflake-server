@@ -1,11 +1,4 @@
-[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/isaacwasserman-mcp-snowflake-server-badge.png)](https://mseep.ai/app/isaacwasserman-mcp-snowflake-server)
-
-# Snowflake MCP Server
-
-[![smithery badge](https://smithery.ai/badge/mcp_snowflake_server)](https://smithery.ai/server/mcp_snowflake_server) [![PyPI - Version](https://img.shields.io/pypi/dm/mcp-snowflake-server?color&logo=pypi&logoColor=white&label=PyPI%20downloads)](https://pypi.org/project/mcp-snowflake-server/)
-
 ---
-
 ## Overview
 A Model Context Protocol (MCP) server implementation that provides database interaction with Snowflake. This server enables running SQL queries via tools and exposes data insights and schema context as resources.
 
@@ -84,49 +77,9 @@ The server exposes the following tools:
 
 ---
 
-## Usage with Claude Desktop
-
-### Installing via Smithery
-
-To install Snowflake Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/mcp_snowflake_server):
-
-```bash
-npx -y @smithery/cli install mcp_snowflake_server --client claude
-```
-
----
-
-### Installing via UVX
-
-```json
-"mcpServers": {
-  "snowflake_pip": {
-    "command": "uvx",
-    "args": [
-      "--python=3.12",  // Optional: specify Python version <=3.12
-      "mcp_snowflake_server",
-      "--account", "your_account",
-      "--warehouse", "your_warehouse",
-      "--user", "your_user",
-      "--password", "your_password",
-      "--role", "your_role",
-      "--database", "your_database",
-      "--schema", "your_schema"
-      // Optionally: "--private_key_path", "your_private_key_absolute_path"
-      // Optionally: "--allow_write"
-      // Optionally: "--log_dir", "/absolute/path/to/logs"
-      // Optionally: "--log_level", "DEBUG"/"INFO"/"WARNING"/"ERROR"/"CRITICAL"
-      // Optionally: "--exclude_tools", "{tool_name}", ["{other_tool_name}"]
-    ]
-  }
-}
-```
-
----
-
 ### Installing Locally
 
-1. Install [Claude AI Desktop App](https://claude.ai/download)
+1. Install [Cursor IDE](https://cursor.com/downloads)
 
 2. Install `uv`:
 
@@ -143,11 +96,7 @@ SNOWFLAKE_ROLE="xxx"
 SNOWFLAKE_DATABASE="xxx"
 SNOWFLAKE_SCHEMA="xxx"
 SNOWFLAKE_WAREHOUSE="xxx"
-SNOWFLAKE_PASSWORD="xxx"
-SNOWFLAKE_PASSWORD="xxx"
 SNOWFLAKE_PRIVATE_KEY_PATH=/absolute/path/key.p8
-# Alternatively, use external browser authentication:
-# SNOWFLAKE_AUTHENTICATOR="externalbrowser"
 ```
 
 4. [Optional] Modify `runtime_config.json` to set exclusion patterns for databases, schemas, or tables.
@@ -158,21 +107,25 @@ SNOWFLAKE_PRIVATE_KEY_PATH=/absolute/path/key.p8
 uv --directory /absolute/path/to/mcp_snowflake_server run mcp_snowflake_server
 ```
 
-6. Add the server to your `claude_desktop_config.json`:
+6. Add the server to your `mcp.json`: Cursor -> Settings -> Cursor Settings -> Tools & Integrations -> New MCP sERVER 
 
 ```json
-"mcpServers": {
-  "snowflake_local": {
-    "command": "/absolute/path/to/uv",
-    "args": [
-      "--python=3.12",  // Optional
-      "--directory", "/absolute/path/to/mcp_snowflake_server",
-      "run", "mcp_snowflake_server"
+
+{
+  "mcpServers": {
+    "snowflake_local": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/absolute/path/to/mcp_snowflake_server",
+        "run",
+        "mcp_snowflake_server"
       // Optionally: "--allow_write"
       // Optionally: "--log_dir", "/absolute/path/to/logs"
       // Optionally: "--log_level", "DEBUG"/"INFO"/"WARNING"/"ERROR"/"CRITICAL"
       // Optionally: "--exclude_tools", "{tool_name}", ["{other_tool_name}"]
-    ]
+      ]
+    }
   }
 }
 ```
